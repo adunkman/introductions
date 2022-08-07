@@ -2,7 +2,9 @@ version: "3.9"
 
 services:
   app:
-    build: .
+    build:
+      context: .
+      target: development
     volumes:
       - .:/code
       - /code/node_modules
