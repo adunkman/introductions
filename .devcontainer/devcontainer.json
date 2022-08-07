@@ -1,0 +1,6 @@
+{
+	"name": "app",
+	"dockerComposeFile": "../docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/code"
+}
