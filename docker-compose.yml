@@ -10,3 +10,27 @@ services:
       - /code/node_modules
     ports:
       - 3000:3000
+
+  terraform:
+    image: hashicorp/terraform:1.2.7
+    profiles:
+      - utilities
+    working_dir: /terraform
+    volumes:
+      - ./terraform:/terraform
+    environment:
+      AWS_REGION: "${AWS_REGION}"
+      AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
+      AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
+      HEROKU_EMAIL: "${HEROKU_EMAIL}"
+      HEROKU_API_KEY: "${HEROKU_API_KEY}"
+      TF_VAR_heroku_basename: "${TF_VAR_heroku_basename}"
+
+  tfsec:
+    image: aquasec/tfsec:v1.27.1
+    profiles:
+      - utilities
+    working_dir: /terraform
+    command: .
+    volumes:
+      - ./terraform:/terraform
