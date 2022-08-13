@@ -44,7 +44,7 @@ jobs:
           TF_VAR_heroku_basename: ${{ secrets.TF_VAR_heroku_basename }}
 
       - name: Apply infrastructure changes
-        if: ${{ github.ref == 'ref/head/main' }}
+        if: ${{ github.ref == 'refs/heads/main' }}
         run: docker compose run terraform apply planned
         env:
           AWS_REGION: ${{ secrets.AWS_REGION }}
