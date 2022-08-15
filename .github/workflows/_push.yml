@@ -1,0 +1,25 @@
+name: Push
+
+on:
+  push:
+    branches-ignore:
+      - main
+
+jobs:
+  jest:
+    uses: ./.github/workflows/jest.yml
+
+  tfsec:
+    uses: ./.github/workflows/tfsec.yml
+
+  terraform:
+    uses: ./.github/workflows/terraform.yml
+    with:
+      apply_changes: false
+    secrets:
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
+      HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      TF_VAR_heroku_basename: ${{ secrets.TF_VAR_heroku_basename }}
