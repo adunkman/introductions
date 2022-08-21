@@ -10,6 +10,9 @@ services:
       - /code/node_modules
     ports:
       - 3000:3000
+    environment:
+      APP_SESSION_SECRET: "${APP_SESSION_SECRET}"
+      APP_NAME: "${APP_NAME}"
 
   terraform:
     image: hashicorp/terraform:1.2.7

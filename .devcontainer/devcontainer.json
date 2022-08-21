@@ -2,5 +2,14 @@
 	"name": "app",
 	"dockerComposeFile": "../docker-compose.yml",
 	"service": "app",
-	"workspaceFolder": "/code"
+	"workspaceFolder": "/code",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ZixuanChen.vitest-explorer",
+				"hashicorp.terraform",
+				"dbaeumer.vscode-eslint"
+			]
+		}
+	}
 }

@@ -2,12 +2,23 @@ name: Push
 
 on:
   push:
-    branches-ignore:
-      - main
+
+env:
+  APP_NAME: CI Test
+  APP_SESSION_SECRET: insecure-secret
 
 jobs:
-  jest:
-    uses: ./.github/workflows/jest.yml
+  test:
+    name: yarn
+    uses: ./.github/workflows/yarn.yml
+    with:
+      script: coverage
+
+  lint:
+    name: yarn
+    uses: ./.github/workflows/yarn.yml
+    with:
+      script: lint
 
   tfsec:
     uses: ./.github/workflows/tfsec.yml
