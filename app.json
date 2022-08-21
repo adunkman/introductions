@@ -1,3 +1,11 @@
 {
-  "stack": "heroku-22"
+  "stack": "heroku-22",
+  "env": {
+    "APP_NAME": {
+      "value": "Generated Review App"
+    },
+    "APP_SESSION_SECRET": {
+      "value": "insecure-secret"
+    }
+  }
 }
