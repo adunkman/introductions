@@ -21,15 +21,7 @@ export default function Index() {
     <main>
       <h1>Welcome to {APP_NAME}!</h1>
       <p>Use the next few pages to introduce yourself and let us know what you’ll be working on today.</p>
-
-      <ul>
-        <li>
-          <Link to="/sessions/new?type=meetup">Continue with Meetup</Link>
-        </li>
-        <li>
-          <Link to="/sessions/new?type=anonymous">I don’t have a Meetup account</Link>
-        </li>
-      </ul>
+      <Link to="/sessions/new">Continue</Link>
     </main>
   );
 }
