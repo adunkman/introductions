@@ -13,7 +13,7 @@ const storage = createCookieSessionStorage({
     secrets: [ APP_SESSION_SECRET ],
     sameSite: "strict",
     path: "/",
-    maxAge: Duration.fromObject({ days: 1 }).as("seconds"),
+    maxAge: Duration.fromObject({ months: 1 }).as("seconds"),
     httpOnly: true,
   }
 });

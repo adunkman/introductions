@@ -1,18 +1,51 @@
-import type { LoaderFunction } from "@remix-run/node";
-import User, { UserType } from "~/models/user";
-import { createUserSession } from "~/utils/session.server";
+import type { ActionFunction, LoaderFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
+import { Link, useLoaderData } from "@remix-run/react";
+import { InputText } from "~/components/InputText";
+import type { UserAttrs } from "~/models/user";
+import User from "~/models/user";
+import { createUserSession, getUserSession } from "~/utils/session.server";
 
-export const loader: LoaderFunction = ({ request }) => {
-  const url = new URL(request.url);
-  const type = url.searchParams.get("type") === "meetup"
-    ? UserType.MeetupAccount
-    : UserType.Anonymous;
+export const loader: LoaderFunction = async ({ request }) => {
+  const user = await getUserSession(request);
+  const { searchParams } = new URL(request.url);
 
-  switch (type) {
-    case UserType.Anonymous:
-      return createUserSession(new User({ type }), "/wizard/name");
+  return json({
+    name: user?.name || searchParams.get("name"),
+    pronouns: user?.pronouns || searchParams.get("pronouns")
+  } as UserAttrs);
+}
 
-    default:
-      throw new Error("Unknown user type.");
-  }
+export default function NewSession() {
+  const user = new User(useLoaderData<UserAttrs>());
+
+  return (
+    <main>
+      <h1>Welcome!</h1>
+      <p>We’ll share your name and pronouns with others attending today.</p>
+      <p>As a reminder, you have agreed to our <Link to="/code-of-conduct" target="_blank">Code of Conduct</Link>.</p>
+
+      <form method="post">
+        <InputText name="name" defaultValue={user.name} required>
+          What is your first name?
+        </InputText>
+
+        <InputText name="pronouns" defaultValue={user.pronouns} required>
+          What pronouns do you use?
+        </InputText>
+
+        <button type="submit">Continue</button>
+      </form>
+    </main>
+  );
+}
+
+export const action: ActionFunction = async ({ request }) => {
+  const formData = await request.formData();
+  const user = new User({
+    name: formData.get("name") as string,
+    pronouns: formData.get("pronouns") as string,
+  });
+
+  return createUserSession(user, "/introductions/new");
 };
