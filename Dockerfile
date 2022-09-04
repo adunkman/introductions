@@ -1,8 +1,6 @@
-FROM node:18-alpine3.16 AS development
-RUN apk add --no-cache python3 make g++ git-perl gnupg
-RUN rm /root/.gnupg/pubring.kbx /root/.gnupg/trustdb.gpg
+FROM node:16
 WORKDIR /code
 COPY package.json yarn.lock ./
-RUN yarn
+RUN yarn install
 ENTRYPOINT ["yarn", "run"]
 CMD ["dev"]

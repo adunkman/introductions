@@ -1,0 +1,14 @@
+name: Deployment
+
+on:
+  deployment_status:
+
+jobs:
+  e2e:
+    name: yarn
+    if: github.event.deployment_status.state == 'success'
+    uses: ./.github/workflows/yarn.yml
+    with:
+      script: e2e
+    env:
+      CYPRESS_BASE_URL: ${{ github.event.deployment_status.target_url }}

@@ -8,7 +8,7 @@ on:
         type: string
 
 jobs:
-  jest:
+  yarn:
     name: run ${{ inputs.script }}
     runs-on: ubuntu-latest
     steps:
