@@ -9,7 +9,7 @@ import { Toggle } from "~/components/Toggle";
 import Introduction from "~/models/introduction";
 import type { UserAttrs } from "~/models/user";
 import User from "~/models/user";
-import { createUserSession, requireUserSession } from "~/utils/session.server";
+import { requireUserSession } from "~/utils/session.server";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const user = await requireUserSession(request);
